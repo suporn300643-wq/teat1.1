@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>จำลองข้อสอบใบอนุญาตตัวแทนประกันชีวิต</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Sarabun', sans-serif; }
+        .calculator {
+            transition: all 0.3s ease;
+        }
+        .calculator.minimized {
+            transform: scale(0.8);
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Home Page -->
+    <div id="homePage" class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <div class="bg-indigo-600 text-white py-3 px-6 rounded-lg mb-6 inline-block">
+                <h3 class="text-lg font-semibold">ฝ่ายขยายงานภูมิภาค 4</h3>
+            </div>
+            <div class="text-8xl mb-6">📋</div>
+            <h1 class="text-5xl font-bold text-indigo-800 mb-4">จำลองข้อสอบ</h1>
+            <h2 class="text-3xl font-semibold text-indigo-600 mb-4">ใบอนุญาตตัวแทนประกันชีวิต</h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-4">เลือกรูปแบบการทำข้อสอบที่เหมาะกับคุณ พร้อมข้อสอบสุ่มใหม่ทุกครั้ง</p>
+            <div class="bg-gray-100 rounded-lg py-3 px-6 inline-block">
+                <p class="text-gray-700 font-medium">ผู้จัดทำ: นายสุภร อนุสุริยา</p>
+                <p class="text-gray-600 text-sm">ตำแหน่ง: เลขาฝ่ายขยายงานภูมิภาค 4</p>
+            </div>
+        </div>
+
+        <!-- Exam Mode Selection -->
+        <div class="max-w-4xl mx-auto">
+            <h3 class="text-2xl font-bold text-gray-800 text-center mb-8">เลือกรูปแบบการทำข้อสอบ</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Mode 1: Timed with final answers -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-indigo-300" onclick="ExamSystem.startExam('timed-final')">
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">⏰</div>
+                        <h4 class="text-xl font-bold text-gray-800 mb-3">ข้อสอบเสมือนจริง</h4>
+                        <p class="text-gray-600 mb-4">จับเวลา 120 นาที<br>เฉลยตอนสอบเสร็จ</p>
+                        <div class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-medium">
+                            แนะนำสำหรับการฝึกสอบจริง
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mode 2: Timed with instant answers -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-indigo-300" onclick="ExamSystem.startExam('timed-instant')">
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">⚡</div>
+                        <h4 class="text-xl font-bold text-gray-800 mb-3">ข้อสอบเสมือนจริง</h4>
+                        <p class="text-gray-600 mb-4">จับเวลา 120 นาที<br>เฉลยทีละข้อ</p>
+                        <div class="bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium">
+                            เหมาะสำหรับการเรียนรู้
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mode 3: Untimed with final answers -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-indigo-300" onclick="ExamSystem.startExam('untimed-final')">
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">🎯</div>
+                        <h4 class="text-xl font-bold text-gray-800 mb-3">ฝึกทำข้อสอบ</h4>
+                        <p class="text-gray-600 mb-4">ไม่จับเวลา<br>เฉลยตอนสอบเสร็จ</p>
+                        <div class="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm font-medium">
+                            ทำได้ตามจังหวะของคุณ
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mode 4: Untimed with instant answers -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 border-transparent hover:border-indigo-300" onclick="ExamSystem.startExam('untimed-instant')">
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">📚</div>
+                        <h4 class="text-xl font-bold text-gray-800 mb-3">ฝึกทำข้อสอบ</h4>
+                        <p class="text-gray-600 mb-4">ไม่จับเวลา<br>เฉลยทีละข้อ</p>
+                        <div class="bg-yellow-100 text-yellow-800 px-4 py-2 rounded-full text-sm font-medium">
+                            เหมาะสำหรับการศึกษา
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features -->
+            <div class="mt-12 bg-white rounded-2xl shadow-lg p-8">
+                <h4 class="text-xl font-bold text-gray-800 mb-6 text-center">คุณสมบัติของระบบ</h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="text-3xl mb-3">🔀</div>
+                        <h5 class="font-semibold text-gray-800 mb-2">ข้อสอบสุ่ม</h5>
+                        <p class="text-gray-600 text-sm">ข้อสอบสุ่มใหม่ทุกครั้งที่เริ่มทำ</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl mb-3">🧮</div>
+                        <h5 class="font-semibold text-gray-800 mb-2">เครื่องคิดเลข</h5>
+                        <p class="text-gray-600 text-sm">เครื่องคิดเลขในตัวสำหรับคำนวณ</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl mb-3">📊</div>
+                        <h5 class="font-semibold text-gray-800 mb-2">วิเคราะห์ผล</h5>
+                        <p class="text-gray-600 text-sm">รายงานผลคะแนนและการวิเคราะห์</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exam Page -->
+    <div id="examPage" class="container mx-auto px-4 py-8 hidden">
+        <div class="flex gap-6">
+            <!-- Question Navigator - Left Side -->
+            <div class="w-80 space-y-4 sticky top-8">
+                <div class="bg-white rounded-xl shadow-lg p-4">
+                    <h4 class="text-sm font-semibold text-gray-800 mb-3">แถบกระดาษคำตอบ</h4>
+                <div class="grid grid-cols-8 gap-1 mb-3" id="questionNavigator">
+                    <!-- Question numbers will be generated here -->
+                </div>
+                <div class="flex flex-wrap gap-2 text-xs">
+                    <div class="flex items-center">
+                        <div class="w-3 h-3 bg-green-500 rounded mr-1"></div>
+                        <span>ตอบแล้ว</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-3 h-3 bg-yellow-500 rounded mr-1"></div>
+                        <span>ยังไม่แน่ใจ</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-3 h-3 bg-indigo-500 rounded mr-1"></div>
+                        <span>ข้อปัจจุบัน</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-3 h-3 bg-gray-300 rounded mr-1"></div>
+                        <span>ยังไม่ตอบ</span>
+                    </div>
+                </div>
+                
+                <!-- Submit Button -->
+                <div class="mt-4">
+                    <button onclick="ExamSystem.submitExam()" class="w-full px-4 py-3 bg-green-600 text-white rounded-lg font-semibold text-sm hover:bg-green-700 transition-colors duration-200 shadow-lg">
+                        ✅ ส่งข้อสอบ
+                    </button>
+                </div>
+                </div>
+                
+                <!-- Calculator in Sidebar -->
+                <div class="bg-white rounded-xl shadow-lg p-4">
+                    <h5 class="text-sm font-semibold text-gray-800 mb-3">เครื่องคิดเลข</h5>
+                    <div class="bg-gray-100 p-2 rounded-lg mb-3">
+                        <input type="text" id="calcDisplay" class="w-full text-right text-lg font-mono bg-transparent border-none outline-none" value="0" readonly>
+                    </div>
+                    <div class="grid grid-cols-4 gap-1">
+                        <button class="calc-btn bg-red-500 text-white p-2 rounded text-sm hover:bg-red-600 transition-colors" onclick="Calculator.clear()">C</button>
+                        <button class="calc-btn bg-gray-300 text-gray-700 p-2 rounded text-sm hover:bg-gray-400 transition-colors" onclick="Calculator.operator('/')">/</button>
+                        <button class="calc-btn bg-gray-300 text-gray-700 p-2 rounded text-sm hover:bg-gray-400 transition-colors" onclick="Calculator.operator('*')">×</button>
+                        <button class="calc-btn bg-gray-300 text-gray-700 p-2 rounded text-sm hover:bg-gray-400 transition-colors" onclick="Calculator.deleteLast()">⌫</button>
+                        
+                        <button class="calc-btn bg-gray-200 text-gray-800 p-2 rounded text-sm hover:bg-gray-300 transition-colors" onclick="Calculator.input('7')">7</button>
+                        <button class="calc-btn bg-gray-200 text-gray-800 p-2 rounded text-sm hover:bg-gray-300 transition-colors" onclick="Calculator.input('8')">8</button>
+                        <button class="calc-btn bg-gray-200 text-gray-800 p-2 rounded text-sm hover:bg-gray-300 transition-colors" onclick="Calculator.input('9')">9</button>
+                        <button class="calc-btn bg-gray-300 text-gray-700 p-2 rounded text-sm hover:bg-gray-400 transition-colors" onclick="Calculator.operator('-')">−</button>
+                        
+                        <button class="calc-btn bg-gray-200 text-gray-800 p-2 rounded text-sm hover:bg-gray-300 transition-colors" onclick="Calculator.input('4')">4</button>
+                        <button class="calc-btn bg-gray-200 text-gray-800 p-2 rounded text-sm hover:bg-gray-300 transition-colors" onclick="Calculator.input('5')">5</button>
+                        <button class="calc-btn bg-gray-200 text-gray-800 p-2 rounded text-sm hover:bg-gray-300 transition-colors" onclick="Calculator.input('6')">6</button>
+                        <button class="calc-btn bg-gray-300 text-gray-700 p-2 rounded text-sm hover:bg-gray-400 transition-colors" onclick="Calculator.operator('+')">+</button>
+                        
+                        <button class="calc-btn bg-gray-200 text-gray-800 p-2 rounded text-sm hover:bg-gray-300 transition-colors" onclick="Calculator.input('1')">1</button>
+                        <button class="calc-btn bg-gray-200 text-gray-800 p-2 rounded text-sm hover:bg-gray-300 transition-colors" onclick="Calculator.input('2')">2</button>
+                        <button class="calc-btn bg-gray-200 text-gray-800 p-2 rounded text-sm hover:bg-gray-300 transition-colors" onclick="Calculator.input('3')">3</button>
+                        <button class="calc-btn bg-blue-500 text-white p-2 rounded text-sm hover:bg-blue-600 transition-colors row-span-2" onclick="Calculator.calculate()" style="grid-row: span 2;">=</button>
+                        
+                        <button class="calc-btn bg-gray-200 text-gray-800 p-2 rounded text-sm hover:bg-gray-300 transition-colors" onclick="Calculator.input('0')" style="grid-column: span 2;">0</button>
+                        <button class="calc-btn bg-gray-200 text-gray-800 p-2 rounded text-sm hover:bg-gray-300 transition-colors" onclick="Calculator.input('.')">.</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="flex-1">
+        <!-- Exam Container -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+            <!-- Exam Header -->
+            <div class="bg-indigo-600 text-white p-6">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="text-xl font-semibold">ข้อสอบจำลอง</h3>
+                        <p class="text-indigo-200" id="examModeText">รูปแบบ: ข้อสอบเสมือนจริง</p>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-2xl font-bold" id="timer">02:00:00</div>
+                        <div class="text-sm text-indigo-200" id="timerLabel">เหลือเวลา</div>
+                    </div>
+                </div>
+                <button onclick="ExamSystem.goHome()" class="mt-4 px-4 py-2 bg-indigo-500 hover:bg-indigo-400 rounded-lg text-sm transition-colors duration-200">
+                    ← กลับหน้าหลัก
+                </button>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="bg-gray-200 h-2">
+                <div class="bg-indigo-500 h-2 transition-all duration-300" id="progressBar" style="width: 0%"></div>
+            </div>
+
+            <!-- Question Section -->
+            <div class="p-8" id="questionSection">
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-sm font-medium text-gray-500">ข้อที่ <span id="currentQuestion">1</span> จาก <span id="totalQuestions">60</span></span>
+                        <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium" id="questionCategory">หมวด: กฎหมายประกันชีวิต</span>
+                    </div>
+                    
+                    <h4 class="text-xl font-semibold text-gray-800 mb-6" id="questionText">
+                        กำลังโหลดข้อสอบ...
+                    </h4>
+
+                    <div class="space-y-4" id="optionsContainer">
+                        <!-- Options will be generated here -->
+                    </div>
+
+                    <!-- Instant Answer Display -->
+                    <div id="instantAnswer" class="mt-6 p-4 rounded-lg hidden">
+                        <div class="flex items-center mb-2">
+                            <span class="font-semibold mr-2">เฉลย:</span>
+                            <span id="answerStatus" class="px-3 py-1 rounded-full text-sm font-medium"></span>
+                        </div>
+                        <p id="answerExplanation" class="text-gray-700"></p>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="flex justify-between items-center mt-8 pt-6 border-t border-gray-200">
+                    <button id="prevBtn" onclick="ExamSystem.prevQuestion()" class="px-6 py-3 bg-gray-300 text-gray-600 rounded-lg font-medium hover:bg-gray-400 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                        ← ข้อก่อนหน้า
+                    </button>
+                    
+                    <div class="flex space-x-4">
+                        <button id="markBtn" onclick="ExamSystem.toggleMark()" class="px-6 py-3 bg-yellow-500 text-white rounded-lg font-medium hover:bg-yellow-600 transition-colors duration-200">
+                            🤔 ข้อที่ยังไม่แน่ใจ
+                        </button>
+                        <button id="nextBtn" onclick="ExamSystem.nextQuestion()" class="px-6 py-3 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors duration-200">
+                            ข้อถัดไป →
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="p-8 hidden" id="resultsSection">
+                <div class="text-center">
+                    <div class="mb-6">
+                        <div class="text-6xl mb-4">🎉</div>
+                        <h3 class="text-3xl font-bold text-gray-800 mb-2">เสร็จสิ้นการทำข้อสอบ!</h3>
+                        <p class="text-gray-600">ผลคะแนนของคุณ</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-green-400 to-blue-500 rounded-2xl p-8 text-white mb-6">
+                        <div class="text-5xl font-bold mb-2" id="finalScore">85%</div>
+                        <div class="text-xl">คะแนนรวม</div>
+                        <div class="mt-4 text-lg">
+                            ตอบถูก <span id="correctAnswers">42</span> ข้อ จาก <span id="totalAnswers">50</span> ข้อ
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                        <div class="bg-green-100 p-4 rounded-lg">
+                            <div class="text-2xl font-bold text-green-600" id="correctCount">42</div>
+                            <div class="text-green-700">ตอบถูก</div>
+                        </div>
+                        <div class="bg-red-100 p-4 rounded-lg">
+                            <div class="text-2xl font-bold text-red-600" id="incorrectCount">8</div>
+                            <div class="text-red-700">ตอบผิด</div>
+                        </div>
+                        <div class="bg-yellow-100 p-4 rounded-lg">
+                            <div class="text-2xl font-bold text-yellow-600" id="markedCount">3</div>
+                            <div class="text-yellow-700">ยังไม่แน่ใจ</div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <button onclick="ExamSystem.reviewAnswers()" class="w-full md:w-auto px-8 py-3 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors duration-200">
+                            📝 ดูเฉลยและทบทวน
+                        </button>
+                        <button onclick="ExamSystem.goHome()" class="w-full md:w-auto px-8 py-3 bg-gray-600 text-white rounded-lg font-medium hover:bg-gray-700 transition-colors duration-200 ml-0 md:ml-4">
+                            🏠 กลับหน้าหลัก
+                        </button>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <script>
+        // Comprehensive Question Bank with 60 unique questions
+        const questionBank = [
+            // จรรยาบรรณ (15 ข้อ)
+            {
+                id: 1,
+                category: "จรรยาบรรณ",
+                question: "ตัวแทนประกันชีวิตควรปฏิบัติตัวอย่างไรกับลูกค้า?",
+                options: [
+                    "1. ซื่อสัตย์และเป็นธรรม",
+                    "2. หาผลกำไรให้ตัวเองมากที่สุด",
+                    "3. ขายกรมธรรม์ราคาแพงเสมอ",
+                    "4. ไม่ต้องอธิบายรายละเอียด"
+                ],
+                correct: 0,
+                explanation: "ตัวแทนประกันชีวิตต้องซื่อสัตย์และเป็นธรรมต่อลูกค้าเป็นหลักจรรยาบรรณสำคัญ"
+            },
+            {
+                id: 2,
+                category: "จรรยาบรรณ",
+                question: "เมื่อลูกค้าถามเรื่องที่ตัวแทนไม่แน่ใจ ควรทำอย่างไร?",
+                options: [
+                    "1. ตอบไปตามที่คิด",
+                    "2. หาข้อมูลที่ถูกต้องมาตอบ",
+                    "3. บอกว่าไม่สำคัญ",
+                    "4. เปลี่ยนเรื่อง"
+                ],
+                correct: 1,
+                explanation: "ตัวแทนต้องหาข้อมูลที่ถูกต้องและครบถ้วนมาให้ลูกค้าเสมอ"
+            },
+            {
+                id: 3,
+                category: "จรรยาบรรณ",
+                question: "ข้อมูลส่วนตัวของลูกค้าควรได้รับการปฏิบัติอย่างไร?",
+                options: [
+                    "1. เล่าให้เพื่อนฟัง",
+                    "2. รักษาเป็นความลับ",
+                    "3. โพสต์ในโซเชียลมีเดีย",
+                    "4. ใช้เป็นตัวอย่างกับลูกค้าคนอื่น"
+                ],
+                correct: 1,
+                explanation: "การรักษาความลับของลูกค้าเป็นหน้าที่สำคัญของตัวแทนประกันชีวิต"
+            },
+            {
+                id: 4,
+                category: "จรรยาบรรณ",
+                question: "หากลูกค้าต้องการซื้อประกันที่ไม่เหมาะสม ตัวแทนควรทำอย่างไร?",
+                options: [
+                    "1. ขายตามที่ลูกค้าต้องการ",
+                    "2. แนะนำสิ่งที่เหมาะสมกับลูกค้า",
+                    "3. ปฏิเสธการขาย",
+                    "4. ให้ลูกค้าตัดสินใจเอง"
+                ],
+                correct: 1,
+                explanation: "ตัวแทนต้องแนะนำสิ่งที่เหมาะสมและเป็นประโยชน์กับลูกค้าจริงๆ"
+            },
+            {
+                id: 5,
+                category: "จรรยาบรรณ",
+                question: "การรับของขวัญจากลูกค้าควรปฏิบัติอย่างไร?",
+                options: [
+                    "1. รับได้ทุกอย่าง",
+                    "2. รับเฉพาะของที่มีค่าน้อย",
+                    "3. ไม่ควรรับเลย",
+                    "4. รับแล้วแบ่งให้เพื่อนร่วมงาน"
+                ],
+                correct: 2,
+                explanation: "ตัวแทนไม่ควรรับของขวัญจากลูกค้าเพื่อรักษาความเป็นกลางและหลีกเลี่ยงผลประโยชน์ทับซ้อน"
+            },
+            {
+                id: 6,
+                category: "จรรยาบรรณ",
+                question: "เมื่อมีข้อร้องเรียนจากลูกค้า ตัวแทนควรทำอย่างไร?",
+                options: [
+                    "1. เพิกเฉยไม่สนใจ",
+                    "2. โทษลูกค้าว่าไม่เข้าใจ",
+                    "3. รับฟังและแก้ไขอย่างจริงจัง",
+                    "4. ส่งต่อให้คนอื่นจัดการ"
+                ],
+                correct: 2,
+                explanation: "ตัวแทนต้องรับฟังข้อร้องเรียนและแก้ไขปัญหาอย่างจริงจัง"
+            },
+            {
+                id: 7,
+                category: "จรรยาบรรณ",
+                question: "การแข่งขันกับตัวแทนคนอื่นควรทำอย่างไร?",
+                options: [
+                    "1. ใช้วิธีการใดก็ได้เพื่อชนะ",
+                    "2. แข่งขันอย่างเป็นธรรม",
+                    "3. พูดร้ายคู่แข่ง",
+                    "4. ลดราคาให้ต่ำที่สุด"
+                ],
+                correct: 1,
+                explanation: "การแข่งขันต้องเป็นไปอย่างเป็นธรรมและสุจริต"
+            },
+            {
+                id: 8,
+                category: "จรรยาบรรณ",
+                question: "ตัวแทนควรมีความรู้เรื่องใดเป็นพิเศษ?",
+                options: [
+                    "1. เฉพาะผลิตภัณฑ์ของบริษัทตัวเอง",
+                    "2. กฎหมายและระเบียบที่เกี่ยวข้อง",
+                    "3. วิธีการขายเท่านั้น",
+                    "4. ราคาของคู่แข่ง"
+                ],
+                correct: 1,
+                explanation: "ตัวแทนต้องมีความรู้เรื่องกฎหมายและระเบียบที่เกี่ยวข้องกับการประกันชีวิต"
+            },
+            {
+                id: 9,
+                category: "จรรยาบรรณ",
+                question: "การให้คำแนะนำแก่ลูกค้าควรยึดหลักใด?",
+                options: [
+                    "1. ผลกำไรของตัวแทน",
+                    "2. ประโยชน์ของลูกค้า",
+                    "3. เป้าหมายการขายของบริษัท",
+                    "4. ความสะดวกของตัวแทน"
+                ],
+                correct: 1,
+                explanation: "การให้คำแนะนำต้องยึดประโยชน์ของลูกค้าเป็นหลัก"
+            },
+            {
+                id: 10,
+                category: "จรรยาบรรณ",
+                question: "เมื่อลูกค้าต้องการยกเลิกกรมธรรม์ ตัวแทนควรทำอย่างไร?",
+                options: [
+                    "1. ขัดขวางไม่ให้ยกเลิก",
+                    "2. อธิบายผลกระทบและให้เลือก",
+                    "3. โกรธและไม่ให้บริการ",
+                    "4. เพิกเฉยไม่สนใจ"
+                ],
+                correct: 1,
+                explanation: "ตัวแทนควรอธิบายผลกระทบของการยกเลิกและให้ลูกค้าตัดสินใจเอง"
+            },
+            {
+                id: 11,
+                category: "จรรยาบรรณ",
+                question: "การโฆษณาผลิตภัณฑ์ประกันควรเป็นอย่างไร?",
+                options: [
+                    "1. เกินจริงเพื่อดึงดูดลูกค้า",
+                    "2. ตรงตามความเป็นจริง",
+                    "3. เน้นแต่ข้อดี",
+                    "4. เปรียบเทียบกับคู่แข่ง"
+                ],
+                correct: 1,
+                explanation: "การโฆษณาต้องตรงตามความเป็นจริงและไม่หลอกลวง"
+            },
+            {
+                id: 12,
+                category: "จรรยาบรรณ",
+                question: "ตัวแทนควรปรับปรุงความรู้อย่างไร?",
+                options: [
+                    "1. เรียนรู้เฉพาะเมื่อมีปัญหา",
+                    "2. เรียนรู้อย่างต่อเนื่อง",
+                    "3. พึ่งพาประสบการณ์เท่านั้น",
+                    "4. เรียนรู้เฉพาะผลิตภัณฑ์ใหม่"
+                ],
+                correct: 1,
+                explanation: "ตัวแทนต้องเรียนรู้และพัฒนาตนเองอย่างต่อเนื่อง"
+            },
+            {
+                id: 13,
+                category: "จรรยาบรรณ",
+                question: "การเก็บเอกสารของลูกค้าควรทำอย่างไร?",
+                options: [
+                    "1. เก็บไว้ที่บ้าน",
+                    "2. เก็บอย่างปลอดภัยและเป็นระบบ",
+                    "3. ให้เพื่อนช่วยเก็บ",
+                    "4. เก็บในรถยนต์"
+                ],
+                correct: 1,
+                explanation: "เอกสารลูกค้าต้องเก็บอย่างปลอดภัยและเป็นระบบ"
+            },
+            {
+                id: 14,
+                category: "จรรยาบรรณ",
+                question: "เมื่อมีข้อผิดพลาดในการทำงาน ตัวแทนควรทำอย่างไร?",
+                options: [
+                    "1. ปกปิดไม่ให้ใครรู้",
+                    "2. ยอมรับและแก้ไข",
+                    "3. โทษผู้อื่น",
+                    "4. หาข้ออ้างต่างๆ"
+                ],
+                correct: 1,
+                explanation: "ตัวแทนต้องยอมรับข้อผิดพลาดและแก้ไขอย่างรับผิดชอบ"
+            },
+            {
+                id: 15,
+                category: "จรรยาบรรณ",
+                question: "การให้บริการหลังการขายควรเป็นอย่างไร?",
+                options: [
+                    "1. ให้บริการเฉพาะลูกค้าใหญ่",
+                    "2. ให้บริการทุกลูกค้าอย่างเท่าเทียม",
+                    "3. ให้บริการเฉพาะเมื่อมีปัญหา",
+                    "4. ไม่ต้องให้บริการหลังขาย"
+                ],
+                correct: 1,
+                explanation: "ตัวแทนต้องให้บริการหลังการขายกับทุกลูกค้าอย่างเท่าเทียม"
+            },
+
+            // หลักการประกันชีวิต (15 ข้อ)
+            {
+                id: 16,
+                category: "หลักการประกันชีวิต",
+                question: "การประกันชีวิตช่วยอะไรได้บ้าง?",
+                options: [
+                    "1. ลดความเสี่ยงทางการเงิน",
+                    "2. สร้างความมั่นคงให้ครอบครัว",
+                    "3. เป็นการออมเงิน",
+                    "4. ถูกทุกข้อ"
+                ],
+                correct: 3,
+                explanation: "การประกันชีวิตช่วยลดความเสี่ยง สร้างความมั่นคง และเป็นการออมเงินในตัว"
+            },
+            {
+                id: 17,
+                category: "หลักการประกันชีวิต",
+                question: "ใครเป็นคนที่ได้รับเงินประกันเมื่อผู้เอาประกันเสียชีวิต?",
+                options: [
+                    "1. บริษัทประกัน",
+                    "2. ผู้รับผลประโยชน์",
+                    "3. ตัวแทนประกัน",
+                    "4. รัฐบาล"
+                ],
+                correct: 1,
+                explanation: "ผู้รับผลประโยชน์ที่ระบุในกรมธรรม์จะได้รับเงินประกันเมื่อผู้เอาประกันเสียชีวิต"
+            },
+            {
+                id: 18,
+                category: "หลักการประกันชีวิต",
+                question: "อะไรคือความแตกต่างระหว่างประกันชีวิตกับประกันวินาศภัย?",
+                options: [
+                    "1. ประกันชีวิตคุ้มครองชีวิต ประกันวินาศภัยคุ้มครองทรัพย์สิน",
+                    "2. ไม่มีความแตกต่าง",
+                    "3. ประกันชีวิตแพงกว่า",
+                    "4. ประกันวินาศภัยจ่ายเงินมากกว่า"
+                ],
+                correct: 0,
+                explanation: "ประกันชีวิตคุ้มครองชีวิตและสุขภาพ ส่วนประกันวินาศภัยคุ้มครองทรัพย์สิน"
+            },
+            {
+                id: 19,
+                category: "หลักการประกันชีวิต",
+                question: "เบี้ยประกันชีวิตขึ้นอยู่กับอะไรบ้าง?",
+                options: [
+                    "1. อายุเท่านั้น",
+                    "2. อายุ เพศ และสุขภาพ",
+                    "3. รายได้เท่านั้น",
+                    "4. อาชีพเท่านั้น"
+                ],
+                correct: 1,
+                explanation: "เบี้ยประกันขึ้นอยู่กับอายุ เพศ สุขภาพ และปัจจัยเสี่ยงอื่นๆ"
+            },
+            {
+                id: 20,
+                category: "หลักการประกันชีวิต",
+                question: "หลักการพื้นฐานของการประกันคืออะไร?",
+                options: [
+                    "1. การแบ่งปันความเสี่ยง",
+                    "2. การหาผลกำไร",
+                    "3. การลงทุน",
+                    "4. การออมเงิน"
+                ],
+                correct: 0,
+                explanation: "หลักการพื้นฐานของการประกันคือการแบ่งปันความเสี่ยงระหว่างผู้เอาประกันหลายคน"
+            },
+            {
+                id: 21,
+                category: "หลักการประกันชีวิต",
+                question: "ประกันชีวิตแบบสะสมทรัพย์มีข้อดีอย่างไร?",
+                options: [
+                    "1. เบี้ยถูก",
+                    "2. มีเงินคืนเมื่อครบกำหนด",
+                    "3. ไม่ต้องตรวจสุขภาพ",
+                    "4. คุ้มครองตลอดชีพ"
+                ],
+                correct: 1,
+                explanation: "ประกันชีวิตแบบสะสมทรัพย์จะมีเงินคืนเมื่อครบกำหนดสัญญา"
+            },
+            {
+                id: 22,
+                category: "หลักการประกันชีวิต",
+                question: "ประกันชีวิตแบบคุ้มครองล้วนมีลักษณะอย่างไร?",
+                options: [
+                    "1. เบี้ยแพงแต่มีเงินคืน",
+                    "2. เบี้ยถูกแต่ไม่มีเงินคืน",
+                    "3. คุ้มครองตลอดชีพ",
+                    "4. ต้องตรวจสุขภาพทุกปี"
+                ],
+                correct: 1,
+                explanation: "ประกันชีวิตแบบคุ้มครองล้วนมีเบี้ยถูกแต่ไม่มีเงินคืน"
+            },
+            {
+                id: 23,
+                category: "หลักการประกันชีวิต",
+                question: "การประกันชีวิตกลุ่มมีข้อดีอย่างไร?",
+                options: [
+                    "1. เบี้ยแพงกว่าประกันรายบุคคล",
+                    "2. เบี้ยถูกกว่าประกันรายบุคคล",
+                    "3. คุ้มครองน้อยกว่า",
+                    "4. ไม่สามารถเปลี่ยนแปลงได้"
+                ],
+                correct: 1,
+                explanation: "การประกันชีวิตกลุ่มมีเบี้ยถูกกว่าเนื่องจากมีผู้เอาประกันจำนวนมาก"
+            },
+            {
+                id: 24,
+                category: "หลักการประกันชีวิต",
+                question: "ระยะเวลาคุ้มครองของประกันชีวิตแบบมีกำหนดเวลาคือ?",
+                options: [
+                    "1. 1 ปี",
+                    "2. 5-30 ปี",
+                    "3. ตลอดชีพ",
+                    "4. 100 ปี"
+                ],
+                correct: 1,
+                explanation: "ประกันชีวิตแบบมีกำหนดเวลามักมีระยะเวลาคุ้มครอง 5-30 ปี"
+            },
+            {
+                id: 25,
+                category: "หลักการประกันชีวิต",
+                question: "การประกันชีวิตแบบตลอดชีพมีลักษณะอย่างไร?",
+                options: [
+                    "1. เบี้ยถูกและคุ้มครองจำกัดเวลา",
+                    "2. เบี้ยแพงแต่คุ้มครองตลอดชีพ",
+                    "3. ไม่มีเงินคืน",
+                    "4. ต้องต่ออายุทุกปี"
+                ],
+                correct: 1,
+                explanation: "ประกันชีวิตแบบตลอดชีพมีเบี้ยแพงกว่าแต่ให้การคุ้มครองตลอดชีพ"
+            },
+            {
+                id: 26,
+                category: "หลักการประกันชีวิต",
+                question: "ผู้เอาประกันสามารถกู้เงินจากกรมธรรม์ได้เมื่อไหร่?",
+                options: [
+                    "1. ทันทีที่ซื้อ",
+                    "2. เมื่อกรมธรรม์มีมูลค่าสะสม",
+                    "3. เฉพาะเมื่อเจ็บป่วย",
+                    "4. ไม่สามารถกู้ได้"
+                ],
+                correct: 1,
+                explanation: "สามารถกู้เงินจากกรมธรรม์ได้เมื่อกรมธรรม์มีมูลค่าสะสมแล้ว"
+            },
+            {
+                id: 27,
+                category: "หลักการประกันชีวิต",
+                question: "การประกันชีวิตแบบยูนิตลิงค์มีลักษณะอย่างไร?",
+                options: [
+                    "1. เบี้ยคงที่ ผลตอบแทนคงที่",
+                    "2. เบี้ยคงที่ ผลตอบแทนผันแปร",
+                    "3. เบี้ยผันแปร ผลตอบแทนคงที่",
+                    "4. เบี้ยและผลตอบแทนผันแปร"
+                ],
+                correct: 1,
+                explanation: "ประกันชีวิตแบบยูนิตลิงค์มีเบี้ยคงที่แต่ผลตอบแทนผันแปรตามการลงทุน"
+            },
+            {
+                id: 28,
+                category: "หลักการประกันชีวิต",
+                question: "ข้อดีของการมีประกันชีวิตคืออะไร?",
+                options: [
+                    "1. ได้เงินคืนทันที",
+                    "2. ความมั่นใจทางการเงิน",
+                    "3. ไม่ต้องจ่ายภาษี",
+                    "4. ได้ส่วนลดสินค้า"
+                ],
+                correct: 1,
+                explanation: "ข้อดีหลักของการมีประกันชีวิตคือความมั่นใจทางการเงินสำหรับตัวเองและครอบครัว"
+            },
+            {
+                id: 29,
+                category: "หลักการประกันชีวิต",
+                question: "การประกันชีวิตช่วยในเรื่องภาษีอย่างไร?",
+                options: [
+                    "1. ไม่เกี่ยวข้องกับภาษี",
+                    "2. ลดหย่อนภาษีได้",
+                    "3. เพิ่มภาษี",
+                    "4. ยกเว้นภาษีทั้งหมด"
+                ],
+                correct: 1,
+                explanation: "เบี้ยประกันชีวิตสามารถใช้ลดหย่อนภาษีได้ตามที่กฎหมายกำหนด"
+            },
+            {
+                id: 30,
+                category: "หลักการประกันชีวิต",
+                question: "ผู้รับผลประโยชน์ในกรมธรรม์ประกันชีวิตสามารถเปลี่ยนแปลงได้หรือไม่?",
+                options: [
+                    "1. ไม่สามารถเปลี่ยนแปลงได้",
+                    "2. เปลี่ยนแปลงได้โดยผู้เอาประกัน",
+                    "3. เปลี่ยนแปลงได้โดยบริษัทประกัน",
+                    "4. เปลี่ยนแปลงได้โดยผู้รับผลประโยชน์"
+                ],
+                correct: 1,
+                explanation: "ผู้เอาประกันสามารถเปลี่ยนแปลงผู้รับผลประโยชน์ได้ตามต้องการ"
+            },
+
+            // ประมวลกฎหมายแพ่งและพาณิชย์ (10 ข้อ)
+            {
+                id: 31,
+                category: "ประมวลกฎหมายแพ่งและพาณิชย์",
+                question: "สัญญาประกันภัยจะมีผลเมื่อไหร่?",
+                options: [
+                    "1. เมื่อลงนามในใบคำขอ",
+                    "2. เมื่อจ่ายเบี้ยประกันครั้งแรก",
+                    "3. เมื่อบริษัทอนุมัติ",
+                    "4. เมื่อได้รับกรมธรรม์"
+                ],
+                correct: 2,
+                explanation: "สัญญาประกันภัยจะมีผลเมื่อบริษัทประกันอนุมัติและมีการจ่ายเบี้ยประกัน"
+            },
+            {
+                id: 32,
+                category: "ประมวลกฎหมายแพ่งและพาณิชย์",
+                question: "หากผู้เอาประกันให้ข้อมูลเท็จ จะเกิดอะไรขึ้น?",
+                options: [
+                    "1. ไม่มีผลอะไร",
+                    "2. บริษัทสามารถยกเลิกสัญญาได้",
+                    "3. ต้องจ่ายค่าปรับ",
+                    "4. ต้องซื้อประกันใหม่"
+                ],
+                correct: 1,
+                explanation: "หากผู้เอาประกันให้ข้อมูลเท็จ บริษัทประกันสามารถยกเลิกสัญญาได้"
+            },
+            {
+                id: 33,
+                category: "ประมวลกฎหมายแพ่งและพาณิชย์",
+                question: "ผู้เอาประกันสามารถยกเลิกกรมธรรม์ได้ภายในกี่วันโดยไม่เสียค่าใช้จ่าย?",
+                options: [
+                    "1. 7 วัน",
+                    "2. 15 วัน",
+                    "3. 30 วัน",
+                    "4. 45 วัน"
+                ],
+                correct: 1,
+                explanation: "ผู้เอาประกันสามารถยกเลิกกรมธรรม์ได้ภายใน 15 วันโดยไม่เสียค่าใช้จ่าย"
+            },
+            {
+                id: 34,
+                category: "ประมวลกฎหมายแพ่งและพาณิชย์",
+                question: "การโอนสิทธิในกรมธรรม์ประกันชีวิตต้องทำอย่างไร?",
+                options: [
+                    "1. แจ้งด้วยวาจา",
+                    "2. ทำเป็นลายลักษณ์อักษร",
+                    "3. ไม่ต้องแจ้งใคร",
+                    "4. แจ้งผ่านโทรศัพท์"
+                ],
+                correct: 1,
+                explanation: "การโอนสิทธิในกรมธรรม์ต้องทำเป็นลายลักษณ์อักษรและแจ้งให้บริษัทประกันทราบ"
+            },
+            {
+                id: 35,
+                category: "ประมวลกฎหมายแพ่งและพาณิชย์",
+                question: "ใครมีสิทธิขอดูเอกสารเกี่ยวกับกรมธรรม์?",
+                options: [
+                    "1. ใครก็ได้",
+                    "2. เฉพาะผู้เอาประกันและผู้รับผลประโยชน์",
+                    "3. เฉพาะตัวแทนประกัน",
+                    "4. เฉพาะเจ้าหน้าที่บริษัท"
+                ],
+                correct: 1,
+                explanation: "เฉพาะผู้เอาประกันและผู้รับผลประโยชน์เท่านั้นที่มีสิทธิขอดูเอกสารกรมธรรม์"
+            },
+            {
+                id: 36,
+                category: "ประมวลกฎหมายแพ่งและพาณิชย์",
+                question: "การจ่ายเงินประกันต้องทำภายในกี่วันหลังได้รับเอกสารครบถ้วน?",
+                options: [
+                    "1. 15 วัน",
+                    "2. 30 วัน",
+                    "3. 45 วัน",
+                    "4. 60 วัน"
+                ],
+                correct: 1,
+                explanation: "บริษัทประกันต้องจ่ายเงินประกันภายใน 30 วันหลังได้รับเอกสารครบถ้วน"
+            },
+            {
+                id: 37,
+                category: "ประมวลกฎหมายแพ่งและพาณิชย์",
+                question: "หากมีข้อพิพาทเรื่องกรมธรรม์ ควรดำเนินการอย่างไร?",
+                options: [
+                    "1. ฟ้องร้องทันที",
+                    "2. เจรจาหรือไกล่เกลี่ยก่อน",
+                    "3. เพิกเฉยไม่สนใจ",
+                    "4. ขอให้ตัวแทนจัดการ"
+                ],
+                correct: 1,
+                explanation: "ควรเจรจาหรือใช้วิธีไกล่เกลี่ยก่อนนำไปสู่การฟ้องร้อง"
+            },
+            {
+                id: 38,
+                category: "ประมวลกฎหมายแพ่งและพาณิชย์",
+                question: "การประกันชีวิตของผู้เยาว์ต้องได้ความยินยอมจากใคร?",
+                options: [
+                    "1. ตัวผู้เยาว์เอง",
+                    "2. ผู้ปกครองหรือผู้แทนโดยชอบธรรม",
+                    "3. ครูในโรงเรียน",
+                    "4. เพื่อนบ้าน"
+                ],
+                correct: 1,
+                explanation: "การประกันชีวิตของผู้เยาว์ต้องได้ความยินยอมจากผู้ปกครองหรือผู้แทนโดยชอบธรรม"
+            },
+            {
+                id: 39,
+                category: "ประมวลกฎหมายแพ่งและพาณิชย์",
+                question: "ระยะเวลาการเรียกร้องสิทธิตามกรมธรรม์ประกันชีวิตคือกี่ปี?",
+                options: [
+                    "1. 1 ปี",
+                    "2. 2 ปี",
+                    "3. 3 ปี",
+                    "4. 5 ปี"
+                ],
+                correct: 1,
+                explanation: "ระยะเวลาการเรียกร้องสิทธิตามกรมธรรม์ประกันชีวิตคือ 2 ปี"
+            },
+            {
+                id: 40,
+                category: "ประมวลกฎหมายแพ่งและพาณิชย์",
+                question: "การแก้ไขข้อมูลในกรมธรรม์ต้องได้ความยินยอมจากใคร?",
+                options: [
+                    "1. เฉพาะผู้เอาประกัน",
+                    "2. ผู้เอาประกันและบริษัทประกัน",
+                    "3. เฉพาะบริษัทประกัน",
+                    "4. ตัวแทนประกัน"
+                ],
+                correct: 1,
+                explanation: "การแก้ไขข้อมูลในกรมธรรม์ต้องได้ความยินยอมจากทั้งผู้เอาประกันและบริษัทประกัน"
+            },
+
+            // พรบ.ประกันชีวิต พ.ศ.2535 (10 ข้อ)
+            {
+                id: 41,
+                category: "พรบ.ประกันชีวิต พ.ศ.2535",
+                question: "บริษัทประกันชีวิตต้องมีทุนจดทะเบียนขั้นต่ำเท่าไหร่?",
+                options: [
+                    "1. 100 ล้านบาท",
+                    "2. 200 ล้านบาท",
+                    "3. 300 ล้านบาท",
+                    "4. 500 ล้านบาท"
+                ],
+                correct: 3,
+                explanation: "บริษัทประกันชีวิตต้องมีทุนจดทะเบียนขั้นต่ำ 500 ล้านบาท"
+            },
+            {
+                id: 42,
+                category: "พรบ.ประกันชีวิต พ.ศ.2535",
+                question: "ตัวแทนประกันชีวิตต้องได้รับใบอนุญาตจากใคร?",
+                options: [
+                    "1. กระทรวงการคลัง",
+                    "2. คณะกรรมการกำกับและส่งเสริมการประกอบธุรกิจประกันภัย",
+                    "3. ธนาคารแห่งประเทศไทย",
+                    "4. กรมสรรพากร"
+                ],
+                correct: 1,
+                explanation: "ตัวแทนประกันชีวิตต้องได้รับใบอนุญาตจากคณะกรรมการกำกับและส่งเสริมการประกอบธุรกิจประกันภัย (คปภ.)"
+            },
+            {
+                id: 43,
+                category: "พรบ.ประกันชีวิต พ.ศ.2535",
+                question: "ใบอนุญาตตัวแทนประกันชีวิตมีอายุกี่ปี?",
+                options: [
+                    "1. 1 ปี",
+                    "2. 2 ปี",
+                    "3. 3 ปี",
+                    "4. 5 ปี"
+                ],
+                correct: 2,
+                explanation: "ใบอนุญาตตัวแทนประกันชีวิตมีอายุ 3 ปี"
+            },
+            {
+                id: 44,
+                category: "พรบ.ประกันชีวิต พ.ศ.2535",
+                question: "บริษัทประกันชีวิตต้องจัดสรรเงินสำรองขั้นต่ำเท่าไหร่?",
+                options: [
+                    "1. 50% ของเบี้ยประกัน",
+                    "2. 75% ของเบี้ยประกัน",
+                    "3. 100% ของเบี้ยประกัน",
+                    "4. ตามที่กฎหมายกำหนด"
+                ],
+                correct: 3,
+                explanation: "บริษัทประกันชีวิตต้องจัดสรรเงินสำรองตามที่กฎหมายและระเบียบกำหนด"
+            },
+            {
+                id: 45,
+                category: "พรบ.ประกันชีวิต พ.ศ.2535",
+                question: "การขอใบอนุญาตตัวแทนประกันชีวิตต้องมีคุณสมบัติอย่างไร?",
+                options: [
+                    "1. อายุ 18 ปีบริบูรณ์",
+                    "2. อายุ 20 ปีบริบูรณ์",
+                    "3. อายุ 25 ปีบริบูรณ์",
+                    "4. ไม่จำกัดอายุ"
+                ],
+                correct: 1,
+                explanation: "ผู้ขอใบอนุญาตตัวแทนประกันชีวิตต้องมีอายุ 20 ปีบริบูรณ์"
+            },
+            {
+                id: 46,
+                category: "พรบ.ประกันชีวิต พ.ศ.2535",
+                question: "ตัวแทนประกันชีวิตต้องผ่านการอบรมกี่ชั่วโมง?",
+                options: [
+                    "1. 50 ชั่วโมง",
+                    "2. 75 ชั่วโมง",
+                    "3. 100 ชั่วโมง",
+                    "4. 150 ชั่วโมง"
+                ],
+                correct: 2,
+                explanation: "ตัวแทนประกันชีวิตต้องผ่านการอบรม 75 ชั่วโมง"
+            },
+            {
+                id: 47,
+                category: "พรบ.ประกันชีวิต พ.ศ.2535",
+                question: "บริษัทประกันชีวิตต้องเสนอขายผลิตภัณฑ์ที่ได้รับอนุมัติจากใคร?",
+                options: [
+                    "1. กระทรวงการคลัง",
+                    "2. คปภ.",
+                    "3. ธนาคารแห่งประเทศไทย",
+                    "4. สำนักงานคณะกรรมการกำกับหลักทรัพย์"
+                ],
+                correct: 1,
+                explanation: "บริษัทประกันชีวิตต้องเสนอขายผลิตภัณฑ์ที่ได้รับอนุมัติจาก คปภ."
+            },
+            {
+                id: 48,
+                category: "พรบ.ประกันชีวิต พ.ศ.2535",
+                question: "การต่ออายุใบอนุญาตตัวแทนประกันชีวิตต้องทำก่อนหมดอายุกี่วัน?",
+                options: [
+                    "1. 15 วัน",
+                    "2. 30 วัน",
+                    "3. 60 วัน",
+                    "4. 90 วัน"
+                ],
+                correct: 2,
+                explanation: "การต่ออายุใบอนุญาตต้องทำก่อนหมดอายุ 30 วัน"
+            },
+            {
+                id: 49,
+                category: "พรบ.ประกันชีวิต พ.ศ.2535",
+                question: "ตัวแทนประกันชีวิตสามารถทำงานให้กับบริษัทได้กี่แห่ง?",
+                options: [
+                    "1. 1 แห่ง",
+                    "2. 2 แห่ง",
+                    "3. 3 แห่ง",
+                    "4. ไม่จำกัด"
+                ],
+                correct: 0,
+                explanation: "ตัวแทนประกันชีวิตสามารถทำงานให้กับบริษัทได้เพียง 1 แห่งเท่านั้น"
+            },
+            {
+                id: 50,
+                category: "พรบ.ประกันชีวิต พ.ศ.2535",
+                question: "บริษัทประกันชีวิตต้องส่งรายงานทางการเงินต่อ คปภ. ทุกกี่เดือน?",
+                options: [
+                    "1. ทุกเดือน",
+                    "2. ทุก 3 เดือน",
+                    "3. ทุก 6 เดือน",
+                    "4. ทุกปี"
+                ],
+                correct: 1,
+                explanation: "บริษัทประกันชีวิตต้องส่งรายงานทางการเงินต่อ คปภ. ทุก 3 เดือน"
+            },
+
+            // พรบ.ประกันชีวิต ฉบับที่2 พ.ศ.2551 (10 ข้อ)
+            {
+                id: 51,
+                category: "พรบ.ประกันชีวิต ฉบับที่2 พ.ศ.2551",
+                question: "การแก้ไขเพิ่มเติม พ.ศ.2551 เน้นเรื่องอะไรเป็นหลัก?",
+                options: [
+                    "1. เพิ่มทุนของบริษัท",
+                    "2. คุ้มครองผู้บริโภค",
+                    "3. ลดภาษี",
+                    "4. เพิ่มผลตอบแทน"
+                ],
+                correct: 1,
+                explanation: "การแก้ไขเพิ่มเติม พ.ศ.2551 เน้นการคุ้มครองผู้บริโภคเป็นหลัก"
+            },
+            {
+                id: 52,
+                category: "พรบ.ประกันชีวิต ฉบับที่2 พ.ศ.2551",
+                question: "ระยะเวลา Free Look ที่เพิ่มขึ้นคือกี่วัน?",
+                options: [
+                    "1. 15 วัน",
+                    "2. 21 วัน",
+                    "3. 30 วัน",
+                    "4. 45 วัน"
+                ],
+                correct: 0,
+                explanation: "ระยะเวลา Free Look ได้เพิ่มขึ้นเป็น 15 วัน"
+            },
+            {
+                id: 53,
+                category: "พรบ.ประกันชีวิต ฉบับที่2 พ.ศ.2551",
+                question: "การเปิดเผยข้อมูลผลิตภัณฑ์ต้องทำอย่างไร?",
+                options: [
+                    "1. เปิดเผยบางส่วน",
+                    "2. เปิดเผยอย่างครบถ้วนและชัดเจน",
+                    "3. ไม่ต้องเปิดเผย",
+                    "4. เปิดเผยเฉพาะข้อดี"
+                ],
+                correct: 1,
+                explanation: "ต้องเปิดเผยข้อมูลผลิตภัณฑ์อย่างครบถ้วนและชัดเจน"
+            },
+            {
+                id: 54,
+                category: "พรบ.ประกันชีวิต ฉบับที่2 พ.ศ.2551",
+                question: "การขายผลิตภัณฑ์ประกันชีวิตต้องคำนึงถึงอะไรเป็นหลัก?",
+                options: [
+                    "1. ผลกำไรของบริษัท",
+                    "2. ความเหมาะสมกับลูกค้า",
+                    "3. เป้าหมายการขาย",
+                    "4. ค่าคอมมิชชั่น"
+                ],
+                correct: 1,
+                explanation: "การขายต้องคำนึงถึงความเหมาะสมกับลูกค้าเป็นหลัก (Suitability)"
+            },
+            {
+                id: 55,
+                category: "พรบ.ประกันชีวิต ฉบับที่2 พ.ศ.2551",
+                question: "ตัวแทนต้องให้คำแนะนำที่เหมาะสมโดยพิจารณาจากอะไร?",
+                options: [
+                    "1. รายได้ของลูกค้า",
+                    "2. อายุของลูกค้า",
+                    "3. ความต้องการและฐานะของลูกค้า",
+                    "4. ความสัมพันธ์กับลูกค้า"
+                ],
+                correct: 2,
+                explanation: "ต้องพิจารณาจากความต้องการและฐานะทางการเงินของลูกค้า"
+            },
+            {
+                id: 56,
+                category: "พรบ.ประกันชีวิต ฉบับที่2 พ.ศ.2551",
+                question: "การร้องเรียนของลูกค้าต้องได้รับการตอบสนองภายในกี่วัน?",
+                options: [
+                    "1. 15 วัน",
+                    "2. 30 วัน",
+                    "3. 45 วัน",
+                    "4. 60 วัน"
+                ],
+                correct: 2,
+                explanation: "การร้องเรียนต้องได้รับการตอบสนองภายใน 45 วัน"
+            },
+            {
+                id: 57,
+                category: "พรบ.ประกันชีวิต ฉบับที่2 พ.ศ.2551",
+                question: "บริษัทประกันต้องจัดให้มีระบบอะไรสำหรับลูกค้า?",
+                options: [
+                    "1. ระบบการขาย",
+                    "2. ระบบร้องเรียน",
+                    "3. ระบบการตลาด",
+                    "4. ระบบบัญชี"
+                ],
+                correct: 1,
+                explanation: "บริษัทประกันต้องจัดให้มีระบบร้องเรียนสำหรับลูกค้า"
+            },
+            {
+                id: 58,
+                category: "พรบ.ประกันชีวิต ฉบับที่2 พ.ศ.2551",
+                question: "การอบรมตัวแทนประกันต้องครอบคลุมเรื่องใดเพิ่มเติม?",
+                options: [
+                    "1. เทคนิคการขาย",
+                    "2. จรรยาบรรณและการคุ้มครองผู้บริโภค",
+                    "3. การตลาด",
+                    "4. การบัญชี"
+                ],
+                correct: 1,
+                explanation: "การอบรมต้องครอบคลุมเรื่องจรรยาบรรณและการคุ้มครองผู้บริโภค"
+            },
+            {
+                id: 59,
+                category: "พรบ.ประกันชีวิต ฉบับที่2 พ.ศ.2551",
+                question: "ข้อมูลในใบคำขอประกันต้องมีความถูกต้องอย่างไร?",
+                options: [
+                    "1. ถูกต้องบางส่วน",
+                    "2. ถูกต้องครบถ้วนและตรงตามความเป็นจริง",
+                    "3. ไม่จำเป็นต้องถูกต้อง",
+                    "4. ถูกต้องเฉพาะส่วนสำคัญ"
+                ],
+                correct: 1,
+                explanation: "ข้อมูลในใบคำขอต้องถูกต้องครบถ้วนและตรงตามความเป็นจริง"
+            },
+            {
+                id: 60,
+                category: "พรบ.ประกันชีวิต ฉบับที่2 พ.ศ.2551",
+                question: "การกำกับดูแลตัวแทนประกันมีวัตถุประสงค์เพื่ออะไร?",
+                options: [
+                    "1. เพิ่มรายได้ให้รัฐ",
+                    "2. คุ้มครองผู้บริโภคและสร้างความเชื่อมั่น",
+                    "3. ลดจำนวนตัวแทน",
+                    "4. เพิ่มผลกำไรให้บริษัท"
+                ],
+                correct: 1,
+                explanation: "การกำกับดูแลมีวัตถุประสงค์เพื่อคุ้มครองผู้บริโภคและสร้างความเชื่อมั่นในระบบประกันชีวิต"
+            }
+        ];
+
+        // Exam System
+        const ExamSystem = {
+            currentMode: '',
+            currentQuestionIndex: 0,
+            examQuestions: [],
+            answers: {},
+            markedQuestions: new Set(),
+            timeLeft: 120 * 60,
+            timerInterval: null,
+            isTimedMode: false,
+            showInstantAnswers: false,
+
+            startExam(mode) {
+                this.currentMode = mode;
+                
+                // Configure exam based on mode
+                switch(mode) {
+                    case 'timed-final':
+                        this.isTimedMode = true;
+                        this.showInstantAnswers = false;
+                        this.timeLeft = 120 * 60;
+                        document.getElementById('examModeText').textContent = 'รูปแบบ: ข้อสอบเสมือนจริง (จับเวลา 120 นาที, เฉลยตอนสอบเสร็จ)';
+                        break;
+                    case 'timed-instant':
+                        this.isTimedMode = true;
+                        this.showInstantAnswers = true;
+                        this.timeLeft = 120 * 60;
+                        document.getElementById('examModeText').textContent = 'รูปแบบ: ข้อสอบเสมือนจริง (จับเวลา 120 นาที, เฉลยทีละข้อ)';
+                        break;
+                    case 'untimed-final':
+                        this.isTimedMode = false;
+                        this.showInstantAnswers = false;
+                        document.getElementById('examModeText').textContent = 'รูปแบบ: ฝึกทำข้อสอบ (ไม่จับเวลา, เฉลยตอนสอบเสร็จ)';
+                        break;
+                    case 'untimed-instant':
+                        this.isTimedMode = false;
+                        this.showInstantAnswers = true;
+                        document.getElementById('examModeText').textContent = 'รูปแบบ: ฝึกทำข้อสอบ (ไม่จับเวลา, เฉลยทีละข้อ)';
+                        break;
+                }
+
+                // Shuffle and select all 60 questions
+                this.examQuestions = [...questionBank].sort(() => 0.5 - Math.random());
+                
+                // Reset exam state
+                this.currentQuestionIndex = 0;
+                this.answers = {};
+                this.markedQuestions.clear();
+                
+                // Show/hide timer
+                if (this.isTimedMode) {
+                    document.getElementById('timer').style.display = 'block';
+                    document.getElementById('timerLabel').style.display = 'block';
+                    this.startTimer();
+                } else {
+                    document.getElementById('timer').style.display = 'none';
+                    document.getElementById('timerLabel').style.display = 'none';
+                }
+
+                // Switch to exam page
+                document.getElementById('homePage').classList.add('hidden');
+                document.getElementById('examPage').classList.remove('hidden');
+                
+                // Initialize exam
+                this.generateQuestionNavigator();
+                this.displayQuestion();
+                this.updateProgress();
+            },
+
+            goHome() {
+                if (this.timerInterval) {
+                    clearInterval(this.timerInterval);
+                }
+                document.getElementById('homePage').classList.remove('hidden');
+                document.getElementById('examPage').classList.add('hidden');
+                document.getElementById('questionSection').classList.remove('hidden');
+                document.getElementById('resultsSection').classList.add('hidden');
+            },
+
+            generateQuestionNavigator() {
+                const navigator = document.getElementById('questionNavigator');
+                navigator.innerHTML = '';
+                
+                for (let i = 1; i <= this.examQuestions.length; i++) {
+                    const btn = document.createElement('button');
+                    btn.textContent = i;
+                    btn.className = 'w-8 h-8 rounded text-sm font-medium transition-colors duration-200';
+                    btn.onclick = () => this.goToQuestion(i - 1);
+                    navigator.appendChild(btn);
+                }
+                this.updateNavigatorColors();
+            },
+
+            updateNavigatorColors() {
+                const buttons = document.querySelectorAll('#questionNavigator button');
+                buttons.forEach((btn, index) => {
+                    btn.className = 'w-8 h-8 rounded text-sm font-medium transition-colors duration-200 ';
+                    
+                    if (index === this.currentQuestionIndex) {
+                        btn.className += 'bg-indigo-500 text-white';
+                    } else if (this.answers[index] !== undefined) {
+                        btn.className += 'bg-green-500 text-white';
+                    } else if (this.markedQuestions.has(index)) {
+                        btn.className += 'bg-yellow-500 text-white';
+                    } else {
+                        btn.className += 'bg-gray-300 text-gray-700 hover:bg-gray-400';
+                    }
+                });
+            },
+
+            displayQuestion() {
+                const question = this.examQuestions[this.currentQuestionIndex];
+                
+                document.getElementById('currentQuestion').textContent = this.currentQuestionIndex + 1;
+                document.getElementById('totalQuestions').textContent = this.examQuestions.length;
+                document.getElementById('questionCategory').textContent = 'หมวด: ' + question.category;
+                document.getElementById('questionText').textContent = question.question;
+                
+                const optionsContainer = document.getElementById('optionsContainer');
+                optionsContainer.innerHTML = '';
+                
+                question.options.forEach((option, index) => {
+                    const label = document.createElement('label');
+                    label.className = 'flex items-start p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-indigo-300 hover:bg-indigo-50 transition-all duration-200';
+                    
+                    const input = document.createElement('input');
+                    input.type = 'radio';
+                    input.name = 'answer';
+                    input.value = index;
+                    input.className = 'mt-1 mr-4 text-indigo-600';
+                    input.checked = this.answers[this.currentQuestionIndex] === index;
+                    input.onchange = () => this.saveAnswer(index);
+                    
+                    const span = document.createElement('span');
+                    span.className = 'text-gray-700';
+                    span.textContent = option;
+                    
+                    label.appendChild(input);
+                    label.appendChild(span);
+                    optionsContainer.appendChild(label);
+                });
+                
+                // Update navigation buttons
+                document.getElementById('prevBtn').disabled = this.currentQuestionIndex === 0;
+                document.getElementById('nextBtn').textContent = 
+                    this.currentQuestionIndex === this.examQuestions.length - 1 ? 'ข้อสุดท้าย' : 'ข้อถัดไป →';
+                
+                // Update mark button
+                document.getElementById('markBtn').innerHTML = 
+                    this.markedQuestions.has(this.currentQuestionIndex) ? '✅ ทำเครื่องหมายแล้ว' : '🤔 ข้อที่ยังไม่แน่ใจ';
+                
+                // Hide instant answer initially
+                document.getElementById('instantAnswer').classList.add('hidden');
+                
+                this.updateNavigatorColors();
+                this.updateProgress();
+            },
+
+            saveAnswer(answerIndex) {
+                this.answers[this.currentQuestionIndex] = answerIndex;
+                this.updateNavigatorColors();
+                
+                // Show instant answer if enabled
+                if (this.showInstantAnswers) {
+                    this.showInstantAnswer(answerIndex);
+                }
+            },
+
+            showInstantAnswer(selectedAnswer) {
+                const question = this.examQuestions[this.currentQuestionIndex];
+                const answerDiv = document.getElementById('instantAnswer');
+                const statusSpan = document.getElementById('answerStatus');
+                const explanationP = document.getElementById('answerExplanation');
+                
+                if (selectedAnswer === question.correct) {
+                    answerDiv.className = 'mt-6 p-4 rounded-lg bg-green-100 border border-green-300';
+                    statusSpan.className = 'px-3 py-1 rounded-full text-sm font-medium bg-green-500 text-white';
+                    statusSpan.textContent = '✓ ถูกต้อง';
+                } else {
+                    answerDiv.className = 'mt-6 p-4 rounded-lg bg-red-100 border border-red-300';
+                    statusSpan.className = 'px-3 py-1 rounded-full text-sm font-medium bg-red-500 text-white';
+                    statusSpan.textContent = '✗ ผิด - เฉลย: ข้อ ' + (question.correct + 1);
+                }
+                
+                explanationP.textContent = question.explanation;
+                answerDiv.classList.remove('hidden');
+            },
+
+            goToQuestion(index) {
+                this.currentQuestionIndex = index;
+                this.displayQuestion();
+            },
+
+            nextQuestion() {
+                if (this.currentQuestionIndex < this.examQuestions.length - 1) {
+                    this.currentQuestionIndex++;
+                    this.displayQuestion();
+                }
+            },
+
+            prevQuestion() {
+                if (this.currentQuestionIndex > 0) {
+                    this.currentQuestionIndex--;
+                    this.displayQuestion();
+                }
+            },
+
+            toggleMark() {
+                if (this.markedQuestions.has(this.currentQuestionIndex)) {
+                    this.markedQuestions.delete(this.currentQuestionIndex);
+                } else {
+                    this.markedQuestions.add(this.currentQuestionIndex);
+                }
+                this.displayQuestion();
+            },
+
+            updateProgress() {
+                const answeredCount = Object.keys(this.answers).length;
+                const progress = (answeredCount / this.examQuestions.length) * 100;
+                document.getElementById('progressBar').style.width = progress + '%';
+            },
+
+            startTimer() {
+                this.updateTimerDisplay();
+                this.timerInterval = setInterval(() => {
+                    this.timeLeft--;
+                    this.updateTimerDisplay();
+                    
+                    if (this.timeLeft <= 0) {
+                        clearInterval(this.timerInterval);
+                        this.submitExam();
+                    }
+                }, 1000);
+            },
+
+            updateTimerDisplay() {
+                const hours = Math.floor(this.timeLeft / 3600);
+                const minutes = Math.floor((this.timeLeft % 3600) / 60);
+                const seconds = this.timeLeft % 60;
+                document.getElementById('timer').textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            },
+
+            submitExam() {
+                // Check unanswered questions
+                const answeredCount = Object.keys(this.answers).length;
+                const unansweredCount = this.examQuestions.length - answeredCount;
+                const markedCount = this.markedQuestions.size;
+                
+                // Create confirmation message
+                let confirmMessage = '🚨 ยืนยันการส่งข้อสอบ\n\n';
+                confirmMessage += `📊 สถานะการทำข้อสอบ:\n`;
+                confirmMessage += `✅ ตอบแล้ว: ${answeredCount} ข้อ\n`;
+                confirmMessage += `❌ ยังไม่ตอบ: ${unansweredCount} ข้อ\n`;
+                confirmMessage += `🤔 ยังไม่แน่ใจ: ${markedCount} ข้อ\n\n`;
+                
+                if (unansweredCount > 0) {
+                    confirmMessage += `⚠️ คำเตือน: คุณยังไม่ได้ตอบ ${unansweredCount} ข้อ\n`;
+                    confirmMessage += `ข้อที่ไม่ตอบจะถือว่าผิด!\n\n`;
+                }
+                
+                if (markedCount > 0) {
+                    confirmMessage += `💡 คุณมี ${markedCount} ข้อที่ยังไม่แน่ใจ\n`;
+                    confirmMessage += `ต้องการทบทวนก่อนส่งหรือไม่?\n\n`;
+                }
+                
+                confirmMessage += `คุณแน่ใจหรือไม่ที่จะส่งข้อสอบ?`;
+                
+                // Show confirmation dialog
+                if (!confirm(confirmMessage)) {
+                    return; // Cancel submission
+                }
+                
+                if (this.timerInterval) {
+                    clearInterval(this.timerInterval);
+                }
+                
+                // Calculate results
+                let correctCount = 0;
+                this.examQuestions.forEach((question, index) => {
+                    if (this.answers[index] === question.correct) {
+                        correctCount++;
+                    }
+                });
+                
+                const incorrectCount = this.examQuestions.length - correctCount;
+                const percentage = Math.round((correctCount / this.examQuestions.length) * 100);
+                
+                // Update results display
+                document.getElementById('finalScore').textContent = percentage + '%';
+                document.getElementById('correctAnswers').textContent = correctCount;
+                document.getElementById('totalAnswers').textContent = this.examQuestions.length;
+                document.getElementById('correctCount').textContent = correctCount;
+                document.getElementById('incorrectCount').textContent = incorrectCount;
+                document.getElementById('markedCount').textContent = this.markedQuestions.size;
+                
+                // Show results section
+                document.getElementById('questionSection').classList.add('hidden');
+                document.getElementById('resultsSection').classList.remove('hidden');
+            },
+
+            reviewAnswers() {
+                alert('ฟีเจอร์ดูเฉลยจะเปิดให้ใช้งานในเร็วๆ นี้!');
+            }
+        };
+
+        // Calculator System
+        const Calculator = {
+            display: '0',
+            operator: '',
+            previous: '',
+            waitingForOperand: false,
+
+            updateDisplay() {
+                document.getElementById('calcDisplay').value = this.display;
+            },
+
+            input(value) {
+                if (this.waitingForOperand) {
+                    this.display = value;
+                    this.waitingForOperand = false;
+                } else {
+                    this.display = this.display === '0' ? value : this.display + value;
+                }
+                this.updateDisplay();
+            },
+
+            clear() {
+                this.display = '0';
+                this.operator = '';
+                this.previous = '';
+                this.waitingForOperand = false;
+                this.updateDisplay();
+            },
+
+            deleteLast() {
+                this.display = this.display.length > 1 ? this.display.slice(0, -1) : '0';
+                this.updateDisplay();
+            },
+
+            operator(op) {
+                if (this.operator && !this.waitingForOperand) {
+                    this.calculate();
+                }
+                
+                this.previous = this.display;
+                this.operator = op;
+                this.waitingForOperand = true;
+            },
+
+            calculate() {
+                const current = parseFloat(this.display);
+                const previous = parseFloat(this.previous);
+                
+                if (this.operator && !this.waitingForOperand) {
+                    let result;
+                    switch (this.operator) {
+                        case '+':
+                            result = previous + current;
+                            break;
+                        case '-':
+                            result = previous - current;
+                            break;
+                        case '*':
+                            result = previous * current;
+                            break;
+                        case '/':
+                            result = current !== 0 ? previous / current : 0;
+                            break;
+                        default:
+                            return;
+                    }
+                    
+                    this.display = result.toString();
+                    this.operator = '';
+                    this.previous = '';
+                    this.waitingForOperand = true;
+                    this.updateDisplay();
+                }
+            }
+        };
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            Calculator.updateDisplay();
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'978c3605f5e52603',t:'MTc1NjgwNzc1OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
